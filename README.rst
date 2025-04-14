@@ -62,13 +62,14 @@ Basic Usage
             client_cert='/path/to/apns-cert.pem',
             use_sandbox=False,
         )
-        apns_key_client = APNs(
-            key='/path/to/apns-key.p8',
-            key_id='<KEY_ID>',
-            team_id='<TEAM_ID>',
-            topic='<APNS_TOPIC>',  # Bundle ID
-            use_sandbox=False,
-        )
+        with read('/path/to/apns-key.p8') as key:
+            apns_key_client = APNs(
+                key=key,
+                key_id='<KEY_ID>',
+                team_id='<TEAM_ID>',
+                topic='<APNS_TOPIC>',  # Bundle ID
+                use_sandbox=False,
+            )
         request = NotificationRequest(
             device_token='<DEVICE_TOKEN>',
             message = {
