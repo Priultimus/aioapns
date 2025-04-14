@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="aioapns",
-    version="3.3.1",
+    version="4.0",
     description="An efficient APNs Client Library for Python/asyncio",
     long_description=open("README.rst").read(),
     platforms="all",
