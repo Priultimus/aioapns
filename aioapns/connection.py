@@ -95,14 +95,14 @@ class H2Protocol(asyncio.Protocol):
     def data_received(self, data: bytes) -> None:
         for event in self.conn.receive_data(data):
             if isinstance(event, ResponseReceived):
-                headers = dict(event.headers)
+                headers = dict(event.headers)  # type: ignore
                 self.on_response_received(headers)
             elif isinstance(event, DataReceived):
-                self.on_data_received(event.data, event.stream_id)
+                self.on_data_received(event.data, event.stream_id)  # type: ignore
             elif isinstance(event, RemoteSettingsChanged):
-                self.on_remote_settings_changed(event.changed_settings)
+                self.on_remote_settings_changed(event.changed_settings)  # type: ignore
             elif isinstance(event, StreamEnded):
-                self.on_stream_ended(event.stream_id)
+                self.on_stream_ended(event.stream_id)  # type: ignore
             elif isinstance(event, ConnectionTerminated):
                 self.on_connection_terminated(event)
             elif isinstance(event, WindowUpdated):
@@ -439,6 +439,7 @@ class APNsBaseConnectionPool:
     ) -> APNsBaseClientProtocol:
         assert self.proxy_host is not None, "proxy_host must be set"
         assert self.proxy_port is not None, "proxy_port must be set"
+        assert self.ssl_context is not None, "ssl_context must be set"
 
         _, protocol = await self.loop.create_connection(
             protocol_factory=partial(
@@ -500,9 +501,9 @@ class APNsCertConnectionPool(APNsBaseConnectionPool):
     async def create_connection(self) -> APNsBaseClientProtocol:
         apns_protocol_factory = partial(
             self.protocol_class,
-            self.apns_topic,
+            self.apns_topic,  # type: ignore
             self.loop,
-            self.discard_connection,
+            self.discard_connection,  # type: ignore
         )
 
         if self.proxy_host and self.proxy_port:
@@ -557,9 +558,9 @@ class APNsKeyConnectionPool(APNsBaseConnectionPool):
         )
         apns_protocol_factory = partial(
             self.protocol_class,
-            self.apns_topic,
+            self.apns_topic,  # type: ignore
             self.loop,
-            self.discard_connection,
+            self.discard_connection,  # type: ignore
             auth_provider,
         )
 
