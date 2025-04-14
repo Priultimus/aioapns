@@ -98,9 +98,13 @@ class H2Protocol(asyncio.Protocol):
                 headers = dict(event.headers)  # type: ignore
                 self.on_response_received(headers)
             elif isinstance(event, DataReceived):
-                self.on_data_received(event.data, event.stream_id)  # type: ignore
+                self.on_data_received(
+                    event.data, event.stream_id  # type: ignore
+                )
             elif isinstance(event, RemoteSettingsChanged):
-                self.on_remote_settings_changed(event.changed_settings)  # type: ignore
+                self.on_remote_settings_changed(
+                    event.changed_settings  # type: ignore
+                )
             elif isinstance(event, StreamEnded):
                 self.on_stream_ended(event.stream_id)  # type: ignore
             elif isinstance(event, ConnectionTerminated):
