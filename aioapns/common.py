@@ -103,11 +103,10 @@ class DynamicBoundedSemaphore(asyncio.BoundedSemaphore):
                 waiter.set_exception(exc)
 
 
-class APNS_RESPONSE_CODE:
+class APNS_RESPONSE_CODE(Enum):
     SUCCESS = "200"
     BAD_REQUEST = "400"
     FORBIDDEN = "403"
-    METHOD_NOT_ALLOWED = "405"
     GONE = "410"
     PAYLOAD_TOO_LARGE = "413"
     TOO_MANY_REQUESTS = "429"
